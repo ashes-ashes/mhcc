@@ -1,5 +1,39 @@
-h1, p {
+/* h1, p {
   font-family: Lato;
+} */
+
+body {
+  font-family: sans-serif
 }
 
+.message-index {
+  margin: 50px;
+}
 
+table {
+  width: 800px;
+}
+
+.app {
+  width: 100%;
+}
+
+th {
+  text-align: left;
+  font-weight: bold;
+  padding: 10px 7px;
+}
+
+td {
+  padding: 7px;
+}
+
+.head-button {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+tr:nth-child(2n) {
+  background-color: lavender;
+}

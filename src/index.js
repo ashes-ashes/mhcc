@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import './style.css';
 import './reset.css';
+import './style.css';
 
 import ListItemIndex from './MessageList/ListItemIndex';
 
@@ -40,18 +40,19 @@ class App extends Component {
     }
 
     this.sortMessages = this.sortMessages.bind(this);
+    this.toggleSortByDate = this.toggleSortByDate.bind(this);
   }
 
-  sortMessages(order) {
-    switch (order) {
-      case "asc":
+  sortMessages() {
+    switch (this.state.sort) {
+      case "date-asc":
         this.setState({
           messages: this.state.messages.sort((a, b) => {
             return Date.parse(a.sentAt) - Date.parse(b.sentAt)
           })})
         break;
     
-      case "desc":
+      case "date-desc":
         this.setState({
           messages: this.state.messages.sort((a, b) => {
             return Date.parse(b.sentAt) - Date.parse(a.sentAt)
@@ -63,9 +64,22 @@ class App extends Component {
     }
   }
 
+  toggleSortByDate(order) {
+    if (this.state.sort === "date-desc") {
+      this.setState({sort: "date-asc"})
+    } else {
+      this.setState({sort: "date-desc"})
+    }
+
+    this.sortMessages();
+  }
+
   render() {
-    return <div>
-      <ListItemIndex messages={this.state.messages}/>
+
+    let {messages, sort} = this.state;
+
+    return <div class="app">
+      <ListItemIndex messages={messages} toggleSortByDate={this.toggleSortByDate} sort={sort}/>
     </div>;
   }
 }
