@@ -6,7 +6,7 @@ export default function ListItemIndex(props) {
     let { messages } = props;
 
     return (
-        <ul>
+        <ul className="message-index">
             {messages.map((message) => {
                 return <ListItem message={message} />
             })}
