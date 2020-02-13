@@ -6,10 +6,15 @@ export default function ListItemIndex(props) {
     let { messages } = props;
 
     return (
-        <ul className="message-index">
+        <table className="message-index">
+            <tr>
+                <th>Sender UUID</th>
+                <th>Content</th>
+                <th>Sent At</th>
+            </tr>
             {messages.map((message) => {
                 return <ListItem message={message} />
             })}
-        </ul>
+        </table>
     )
 }

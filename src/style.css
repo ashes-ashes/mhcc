@@ -2,15 +2,4 @@ h1, p {
   font-family: Lato;
 }
 
-.message-list-item {
-  display: flex;
-}
 
-.message-list-item div {
-  padding: 5px;
-}
-
-.message-index {
-  min-width: 800px;
-  padding: 50px;
-}

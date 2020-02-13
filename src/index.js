@@ -20,12 +20,14 @@ class App extends Component {
 
       let { uuid } = message;
 
+      // add message into the comparison hash @ uuid (creating array if it's
+      // the first) - only add it to filteredMessages if it's not a duplicate
       if (messageComparisonHash[uuid] === undefined) {
         filteredMessages.push(message);
         messageComparisonHash[uuid] = [message]
-      } else if (!messageComparisonHash[uuid].some((hashMsg) => {
-          return hashMsg.uuid === uuid
-        })) {
+      } else if (!messageComparisonHash[uuid].some((hashMsg) => { 
+        return hashMsg.uuid === uuid
+      })) {
         filteredMessages.push(message);
         messageComparisonHash[uuid].push(message)
       }
@@ -33,12 +35,35 @@ class App extends Component {
     })
 
     this.state = {
-      messages: filteredMessages
+      messages: filteredMessages,
+      sort: null
+    }
+
+    this.sortMessages = this.sortMessages.bind(this);
+  }
+
+  sortMessages(order) {
+    switch (order) {
+      case "asc":
+        this.setState({
+          messages: this.state.messages.sort((a, b) => {
+            return Date.parse(a.sentAt) - Date.parse(b.sentAt)
+          })})
+        break;
+    
+      case "desc":
+        this.setState({
+          messages: this.state.messages.sort((a, b) => {
+            return Date.parse(b.sentAt) - Date.parse(a.sentAt)
+          })
+        })
+        break;
+      default:
+        break;
     }
   }
 
   render() {
-
     return <div>
       <ListItemIndex messages={this.state.messages}/>
     </div>;

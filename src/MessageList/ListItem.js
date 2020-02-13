@@ -9,10 +9,10 @@ export default function ListItem(props) {
     });
 
     return (
-        <li className="message-list-item">
-            <div>{senderUuid}</div>
-            <div>{content}</div>
-            <div>{sentAt}</div>
-        </li>
+        <tr className="message-list-item" key={Math.random()}>
+            <td>{senderUuid}</td>
+            <td>{content}</td>
+            <td>{sentAt}</td>
+        </tr>
     )
 }
