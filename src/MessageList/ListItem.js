@@ -4,8 +4,9 @@ export default function ListItem(props) {
 
     let { sentAt, content, senderUuid } = props.message;
 
-    sentAt = new Date(sentAt).toLocaleString({
+    sentAt = new Date(sentAt).toLocaleString("en-us", {
         dateStyle: "full",
+        timeStyle: "medium"
     });
 
     return (
