@@ -8,17 +8,21 @@ export default class Paginator extends Component {
         super(props);
 
         this.state = {
-            page: 0,
-            numPages: Math.ceil(props.messages.length / 5)
+            page: 0
         }
 
         this.pageForward = this.pageForward.bind(this);
         this.pageBack = this.pageBack.bind(this);
         this.deleteMessage = this.deleteMessage.bind(this);
+        this.numPages = this.numPages.bind(this);
+    }
+
+    numPages() {
+        return Math.ceil(this.props.messages.length/5);
     }
 
     pageForward() {
-        if (this.state.page + 1 < this.state.numPages) {
+        if (this.state.page + 1 < this.numPages()) {
             this.setState({ page: this.state.page + 1 })
         }
     }
@@ -36,9 +40,9 @@ export default class Paginator extends Component {
 
     render() {
 
-        let {pageBack, pageForward} = this;
+        let {pageBack, pageForward, numPages} = this;
         let {messages, listProps} = this.props;
-        let {page, numPages} = this.state;
+        let {page} = this.state;
 
         let {toggleSortByDate, sort} = listProps;
 
@@ -52,7 +56,7 @@ export default class Paginator extends Component {
                 />
                 <div className="paginator">
                     <button className="page-button" onClick={pageBack}>❮</button>
-                    <span>Page {page + 1} of {numPages}</span>
+                    <span>Page {page + 1} of {numPages()}</span>
                     <button className="page-button" onClick={pageForward}>❯</button>
                 </div>  
             </div>
