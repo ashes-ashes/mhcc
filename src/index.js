@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import './reset.css';
 import './style.css';
 
-import ListItemIndex from './MessageList/ListItemIndex';
+import Paginator from './Paginator/Paginator';
 
 // This is the list of messages.
 import { messages } from './data.json';
@@ -36,19 +36,27 @@ class App extends Component {
 
     this.state = {
       messages: filteredMessages,
-      sort: null,
-      page: 0,
-      numPages: Math.ceil(filteredMessages.length/5)
+      sort: null
     }
 
     this.sortMessages = this.sortMessages.bind(this);
     this.toggleSortByDate = this.toggleSortByDate.bind(this);
-    this.pageForward = this.pageForward.bind(this);
-    this.pageBack = this.pageBack.bind(this);
+  
+    this.deleteMessage = this.deleteMessage.bind(this);
+  }
+
+  deleteMessage(idx) {
+
+    let {messages} = this.state;
+
+    this.setState({
+      messages: messages.slice(0, idx).concat(messages.slice(idx+1, messages.length))
+    });
+
   }
 
   
-
+  // sorts messages according to this.state.sort
   sortMessages() {
     switch (this.state.sort) {
       case "date-asc":
@@ -70,6 +78,8 @@ class App extends Component {
     }
   }
 
+  // changes this.state.sort from date-desc to date-asc
+  // and from anything to date-desc – when this is done, sorts messages
   toggleSortByDate(order) {
 
     if (this.state.sort === "date-desc") {
@@ -80,30 +90,16 @@ class App extends Component {
 
   }
 
-  pageForward() {
-    if (this.state.page+1 < this.state.numPages) {
-      this.setState({page: this.state.page+1})
-    }
-  }
-
-  pageBack() {
-    if (this.state.page > 0) {
-      this.setState({page: this.state.page-1})
-    }
-  }
 
   render() {
 
-    let {messages, page, numPages, sort} = this.state;
-    let {toggleSortByDate, pageForward, pageBack} = this;
+    let {messages, sort} = this.state;
+    let {toggleSortByDate, deleteMessage} = this;
 
-    return <div class="app">
-      <ListItemIndex messages={messages.slice(page*numPages, page*numPages+5)} toggleSortByDate={toggleSortByDate} sort={sort}/>
-      <div className="paginator">
-        <button className="page-button" onClick={pageBack}>❮</button>
-        <span>Page {page+1} of {numPages}</span>
-        <button className="page-button" onClick={pageForward}>❯</button>
-      </div>
+    let listProps = {sort, toggleSortByDate}
+
+    return <div>
+      <Paginator messages={messages} deleteMessage={deleteMessage} listProps={listProps}/>
     </div>;
   }
 }

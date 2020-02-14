@@ -15,8 +15,10 @@ table {
   width: 80%;
 }
 
-.app {
-  width: 100%;
+.page-viewer {
+  display:  flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 th {
@@ -40,5 +42,46 @@ tr:nth-child(2n) {
 }
 
 td:last-child {
-  text-align: right;
+  background-color: white;
+}
+
+.paginator {
+  margin: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.page-button {
+  margin: 10px;
+  font-size: 20px;
+}
+
+.delete-button {
+  background-color: transparent;
+}
+
+button {
+  color: mediumslateblue;
+  
+}
+
+.message-list-item button {
+  visibility: hidden;
+}
+
+.message-list-item:hover button {
+  visibility: visible;
+}
+
+
+button:hover {
+  color: slateblue;
+}
+
+button:active {
+  color: darkslateblue;
+}
+
+button:focus {
+  outline: slateblue;
 }
