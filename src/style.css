@@ -7,11 +7,12 @@ body {
 }
 
 .message-index {
-  margin: 50px;
+  margin: auto;
+  margin-top: 100px;
 }
 
 table {
-  width: 800px;
+  width: 80%;
 }
 
 .app {
@@ -36,4 +37,8 @@ td {
 
 tr:nth-child(2n) {
   background-color: lavender;
+}
+
+td:last-child {
+  text-align: right;
 }

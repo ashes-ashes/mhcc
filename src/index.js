@@ -36,12 +36,18 @@ class App extends Component {
 
     this.state = {
       messages: filteredMessages,
-      sort: null
+      sort: null,
+      page: 0,
+      numPages: Math.ceil(filteredMessages.length/5)
     }
 
     this.sortMessages = this.sortMessages.bind(this);
     this.toggleSortByDate = this.toggleSortByDate.bind(this);
+    this.pageForward = this.pageForward.bind(this);
+    this.pageBack = this.pageBack.bind(this);
   }
+
+  
 
   sortMessages() {
     switch (this.state.sort) {
@@ -65,21 +71,39 @@ class App extends Component {
   }
 
   toggleSortByDate(order) {
+
     if (this.state.sort === "date-desc") {
-      this.setState({sort: "date-asc"})
+      this.setState({sort: "date-asc"}, this.sortMessages());
     } else {
-      this.setState({sort: "date-desc"})
+      this.setState({sort: "date-desc"}, this.sortMessages());
     }
 
-    this.sortMessages();
+  }
+
+  pageForward() {
+    if (this.state.page+1 < this.state.numPages) {
+      this.setState({page: this.state.page+1})
+    }
+  }
+
+  pageBack() {
+    if (this.state.page > 0) {
+      this.setState({page: this.state.page-1})
+    }
   }
 
   render() {
 
-    let {messages, sort} = this.state;
+    let {messages, page, numPages, sort} = this.state;
+    let {toggleSortByDate, pageForward, pageBack} = this;
 
     return <div class="app">
-      <ListItemIndex messages={messages} toggleSortByDate={this.toggleSortByDate} sort={sort}/>
+      <ListItemIndex messages={messages.slice(page*numPages, page*numPages+5)} toggleSortByDate={toggleSortByDate} sort={sort}/>
+      <div className="paginator">
+        <button className="page-button" onClick={pageBack}>❮</button>
+        <span>Page {page+1} of {numPages}</span>
+        <button className="page-button" onClick={pageForward}>❯</button>
+      </div>
     </div>;
   }
 }
